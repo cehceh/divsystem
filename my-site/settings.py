@@ -87,7 +87,7 @@ MIDDLEWARE = [
 
 ]
 
-ROOT_URLCONF = 'mystie.urls'
+ROOT_URLCONF = 'my-site.urls'
 
 TEMPLATES = [
     {
@@ -105,7 +105,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mystie.wsgi.application'
+WSGI_APPLICATION = 'my-site.wsgi.application'
 
 
 # Database
