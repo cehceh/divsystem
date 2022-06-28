@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#* activate the environmant
+source ~/envs/tasks/bin/activate
+
+#* Restart Database service
+# /etc/init.d/postgresql restart
+
+echo '.. Activating our environment .....'
+echo '...'
+echo '.....'
+echo '.......'
+echo '.........'
+echo '...........'
+echo '.............'
+echo '...............'
+echo '.................'
+echo '.... Then execute the main files'
+
+#* Check if database is prepared
+python ~/projects/task/divsystem/manage.py makemigrations
+python ~/projects/task/divsystem/manage.py migrate 
+
+#* Collect static files
+python ~/projects/task/divsystem/manage.py collectstatic --no-input
+
+#* execute the the project
+python ~/projects/task/divsystem/manage.py runserver 0.0.0.0:8000 
+
