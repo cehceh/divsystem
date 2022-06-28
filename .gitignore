@@ -141,6 +141,7 @@ node_module
 
 # for media and staticfiles for STATIC_ROOT
 staticfiles
+static_root/
 # static/
 media
 
