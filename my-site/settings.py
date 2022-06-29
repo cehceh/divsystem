@@ -59,10 +59,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #* 3rd party 
+    'drf_yasg',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
     'django.contrib.sites',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -114,10 +116,7 @@ WSGI_APPLICATION = 'my-site.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+
     'default': env.db()
 
 }
@@ -189,6 +188,7 @@ REST_AUTH_SERIALIZERS = {
 
 
 REST_FRAMEWORK = {
+    # "DATE_INPUT_FORMATS": ["%d-%m-%Y"],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
@@ -214,9 +214,9 @@ ACCOUNT_ADAPTER = 'apps.authentication.adapter.CustomAccountAdapter'
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 
-ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+# ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 
-ACCOUNT_LOGOUT_ON_GET = False  # If True it will logout the user immediately
+# ACCOUNT_LOGOUT_ON_GET = False  # If True it will logout the user immediately
 # ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_UNIQUE_EMAIL = True
 # ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -225,12 +225,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ## This setting to enable us to access sign up view when authenticated
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False #True 
-
-
-
-
-
-
 
 
 # Default primary key field type
