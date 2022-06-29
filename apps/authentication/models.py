@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 import os
 from django.utils.timezone import now
@@ -31,7 +32,11 @@ def avatar_path(instance, filename):
 
 
 class CustomUser(AbstractUser):
-    phone_number = models.CharField(max_length=30, unique=True)
+    phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{11,15}$")
+    phone_number = models.CharField(
+        validators =[phoneNumberRegex], 
+        max_length=16, unique=True
+    )
     country_code = models.CharField(max_length=20)
     birth_date = models.CharField(max_length=20, default='2015-01-01')
         
@@ -46,24 +51,13 @@ class CustomUser(AbstractUser):
         verbose_name=_("Avatar *")
     )
 
-    verified = models.BooleanField(_("Verified"), default=False)
+    status = models.BooleanField(_("Status"), default=False)
 
-    USERNAME_FIELD = 'username'
+    # USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['phone_number']
 
-    def save(self, *args, **kwargs):
-        email = self.email
-        username = self.username
-        phone_number = self.phone_number
-        if bool(email) == False:
-            self.email = self.password[:10]
-        if bool(username) == False:
-            self.username = self.password[:10]
-        if bool(phone_number) == False:
-            self.phone_number = self.password[:10]
-        super(CustomUser, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '{}'.format(self.username)
+        return '{}'.format(self.phone_number)
 
 
