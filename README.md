@@ -2,13 +2,13 @@
 
  *Here is a brief about it*
 
-- First you can find requirements.txt and run files beside manage.py file 
+# 1- First you can find requirements.txt and run files beside manage.py file 
 
-1- "run" file is for making our life easier, you can run the project by using it with the next 
-  command on the linux terminal (#$ source run)
-  But after change the file paths and change the environment name (or you can use my env and paths name)
+  - "run" file is for making our life easier, you can run the project by using it with the next 
+    command on the linux terminal (#$ source run)
+    But after change the file paths and change the environment name (or you can use my env and paths name)
   
-- Second please let me talk about the (3) tasks.
+# 2- Second please let me talk about the (3) tasks.
   *In general your tasks are good and easy to accomplish, and I must mention that to be honest*
 
   *But there are some difficulties faced me when I began to achieve the third task and also with testing*
@@ -19,11 +19,11 @@
   *Really it gives me an outline about the APIs terminology, but it's far from real Django REST Framework.*
   *So, DRF needs practical work besides reading, Thanks to Tuft Studios company that enabled me to achieve your tasks by working for 10 months on practical mobile app. with Django DRF.*
 
-1- Task (1): I think the job has been done as you want or near you want.
+  - Task (1): I think the job has been done as you want or near you want.
 
-2- Task (2): Also the job has been done as you want.
+  - Task (2): Also the job has been done as you want.
 
-3- Task (3): The job has been done, But I think there is something wrong 
+  - Task (3): The job has been done, But I think there is something wrong 
   
   # TO BE CONTINUED ......
 
