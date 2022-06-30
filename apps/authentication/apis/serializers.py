@@ -79,7 +79,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             phone = user.get(phone_number=phone_number)
             if phone['phone_number']:
                 raise serializers.ValidationError(
-                    ('This user is already registered with this phone number .'),
+                    ('This phone number is taken .....'),
                 )
 
         # if no user registered with this phone number
@@ -89,17 +89,14 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     def validate_birth_date(self, birth_date):
         """
-           * :raises: :class:`ValidationError`: 
+           * :raises: :class:`ValidationError`
            * :birth date must be in format 'YYYY-MM-DD'
-           * and must be in the past
+           * :and must be in the past
         """
         today = date.today()
 
-        date_compare = (today.month, today.day) < ((birth_date).month, (birth_date).day)
-        dt = today.year - (birth_date).year - date_compare
-
         #* check if the birth date is in the future raise an error 
-        if dt == -1: 
+        if birth_date > today: 
             raise serializers.ValidationError('Birth date must be in the past') 
 
         return birth_date
@@ -136,8 +133,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         return user
 
 
-
-
 class CustomLOGINSERIALIZER(LoginSerializer):
     username = serializers.CharField(label='Phone Number',required=True)
     email = None
@@ -158,48 +153,18 @@ class CustomLOGINSERIALIZER(LoginSerializer):
             return None
 
 
-
-
-# class DetailUserSerializer(serializers.ModelSerializer):
-#     phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{11,15}$")
-#     phone_number = serializers.CharField(
-#         validators =[phoneNumberRegex], 
-#         max_length=16, required=True
-#     )
-
-#     status = serializers.BooleanField(read_only=True, default=False)
-#     class Meta:
-#         model = CustomUser
-#         fields = [
-#             "phone_number",
-#             "status",
-#         ]
-
-            
-#     def validate_phone_number(self, phone_number):
-#         """
-#         """
-
-#         try:
-#             user = CustomUser.objects.values('phone_number')
-#             match = user.filter(phone_number=phone_number).exists()
-#             if not match:
-#                 raise serializers.ValidationError(
-#                     ('You must registered with this phone number first ....'),
-#                 )
-#         # if no user registered with this phone number
-#         except ObjectDoesNotExist:
-#             return phone_number
-
-
-
-
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class CustomObtainSerializer(TokenObtainPairSerializer):
-    # username = serializers.CharField(label='Phone Number',required=True)
+    """
+    *  :Here the solution of "task no.(3)", but for some reasons I can't get rid of 
+    *  :The username and password fields, I don't know but 
+    *  :I think overriding this class(TokenObtainPairSerializer) is perform the job
+    *  :It may need some time to find what's going on, Really I don't know till now
+    *  :But with some investigation, It will be fixed. 
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -211,7 +176,6 @@ class CustomObtainSerializer(TokenObtainPairSerializer):
         self.fields["status"].required = True
 
 
-
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -220,38 +184,6 @@ class CustomObtainSerializer(TokenObtainPairSerializer):
         token['phone_number'] = user.phone_number
         token['status'] = user.status
         # ...
-        print('TOKEN: ', token, 'ACCESS', token['phone_number'])
+        print('TOKEN: ', token, 'ACCESS: ', token['phone_number'])
         return token
     
-    # def validate(self, attrs):
-    #     data = super().validate(attrs)
-    #     refresh = self.get_token(self.user)
-        
-    #     # data['phone_number'] = self.user.phone_number
-    #     # data['status'] = self.user.status
-    #     # data['access'] = str(refresh.access_token)
-    #     attrs.update({
-    #         # 'password': '',
-    #         'phone_number': self.user.phone_number,
-    #         'status': self.user.status,
-    #         'access': str(refresh.access_token),
-    #     })
-
-    #     return data
-
-# class TokenObtainLifetimeSerializer(TokenObtainPairSerializer):
-
-#     def validate(self, attrs):
-#         data = super().validate(attrs)
-#         refresh = self.get_token(self.user)
-#         data['lifetime'] = int(refresh.access_token.lifetime.total_seconds())
-#         return data
-
-
-# class TokenRefreshLifetimeSerializer(TokenRefreshSerializer):
-
-#     def validate(self, attrs):
-#         data = super().validate(attrs)
-#         refresh = RefreshToken(attrs['refresh'])
-#         data['lifetime'] = int(refresh.access_token.lifetime.total_seconds())
-#         return data
