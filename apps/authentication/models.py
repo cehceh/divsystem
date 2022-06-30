@@ -60,4 +60,17 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return '{}'.format(self.phone_number)
 
-
+    class Meta:
+        app_label = "authentication"
+        verbose_name = "custom_user"
+        verbose_name_plural = "CustomUsers"
+        indexes = [
+            models.Index(
+                fields=[
+                    "phone_number",
+                    "country_code",
+                    "gender",
+                    "email",
+                ]
+            )
+        ]
