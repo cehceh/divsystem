@@ -25,12 +25,14 @@
 
   - Task (3): The job has been done, But I think there is something wrong 
 
-  - Testing : I don't know what can I say to you, you can find 3 files (the good one is test_models) and the others are work only with HTTP_400_BAD_REQUEST, it takes a lot of time to fix issues (one issue solved another raised).
+  - Testing : I don't know what can I say, you can find 3 files (the good one is test_models) and the others are work only with HTTP_400_BAD_REQUEST, it takes a lot of time to fix issues (one issue solved another raised).
 
   - Using django-environ to secure my sensitive data (it's a good package)
 
-  - Books which I open and not finish them (Test Driven Development with python), (Designing Microservices with Django, Designing Data Intensive Application and High Performance Django).
+  - Books which I open and not finish them (Test Driven Development with python), (Designing Microservices with Django), (Designing Data Intensive Application) and (High Performance Django).
+
+  - Finally I'm trying to enhance my knowledge. So I'm learning (Data Structure and algorithms) and (Design Patterns in Python) But the learning process takes some times to absorb the scientific material. 
   
-  # TO BE CONTINUED ......
 
 
+# Thanks for reading .....
