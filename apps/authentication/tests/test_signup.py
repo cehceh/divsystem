@@ -29,11 +29,11 @@ class UserSignUpTestCase(APITestCase):
             last_name="Amer", 
             country_code="EG",
             gender="male",
-            avatar="message_screen.png",
+            # avatar="media_root/message_screen.png",
             phone_number="01067174141",
             birth_date="1981-09-23",
             password="@1234567",
-            status=True,
+            status="True",
         )
         signup_dict = {
             'email': 'amr.job@outlook.com',
@@ -42,7 +42,7 @@ class UserSignUpTestCase(APITestCase):
             'country_code': 'EG',
             'phone_number': '01149003573',
             'gender': 'male',
-            'avatar': "message_screen.png",
+            'avatar': "", #"media_root/message_screen.png",
             'birth_date': '1981-09-23',
             'password1': '@1234567',
             'password2': '@1234567',
@@ -50,6 +50,7 @@ class UserSignUpTestCase(APITestCase):
         
         # Make request
         response = self.client.post(self.signup_url, signup_dict)
+        print('DATA:: ', response.data)
         # Check status response
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         # self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -80,7 +81,7 @@ class UserSignUpTestCase(APITestCase):
         }
         # Make request
         response = self.client.post(self.signup_url, signup_dict)
-        # print("DATA: ", response.data['phone_number'])
+        print("DATA_1: ", response.data)
         # Check status response
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         # self.assertEqual(
