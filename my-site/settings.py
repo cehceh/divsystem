@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'rest_framework_swagger',
-
     'debug_toolbar',         # new
 
     #* My Apps
@@ -175,15 +174,14 @@ STATICFILES_DIRS = (
 AUTHENTICATION_BACKENDS = [
     # allauth specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
-    # Needed to login by username in Django admin, regardless of allauth
-    # 'django.contrib.auth.backends.ModelBackend',
+
 ]
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'apps.authentication.apis.serializers.CustomRegisterSerializer',
 }
 REST_AUTH_SERIALIZERS = {
-    'LOGIN_SERIALIZER': 'apps.authentication.apis.serializers.CustomLOGINSERIALIZER',
+    'LOGIN_SERIALIZER': 'apps.authentication.apis.serializers.CustomLoginSerializer',
 }
 
 

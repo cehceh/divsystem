@@ -1,3 +1,5 @@
+## https://www.rootstrap.com/blog/testing-in-django-django-rest-basics-useful-tools-good-practices/
+
 from faker import Faker as FakerClass
 from faker import config, providers
 import faker

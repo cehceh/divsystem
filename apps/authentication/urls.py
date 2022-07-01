@@ -1,6 +1,6 @@
 from django.urls import path
 from dj_rest_auth.views import LogoutView
-from .apis.views import TokenObtainPairView #, TokenRefreshView
+# from .apis.views import TokenObtainPairView #, TokenRefreshView
 
 from django.conf import settings
 
@@ -8,6 +8,8 @@ from .apis.views import (
     # DetailUserView,
     MyCustomRegister,
     MyCustomLogin,
+    TokenObtainPairView,
+    UserTokenApi,
 )
 
 
@@ -21,6 +23,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view()),
     
     path('token/obtain/', TokenObtainPairView.as_view(), name='token_obtain'),
+    path('user/token/', UserTokenApi.as_view(), name='user_token'),
 
 ]
 
