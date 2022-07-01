@@ -51,7 +51,7 @@ class CustomUser(AbstractUser):
         verbose_name=_("Avatar *")
     )
 
-    status = models.BooleanField(_("Status"), default=False)
+    status = models.CharField(_("Status"), max_length=100, default="")
 
     # USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['phone_number']
@@ -71,6 +71,7 @@ class CustomUser(AbstractUser):
                     "country_code",
                     "gender",
                     "email",
+                    "status",
                 ]
             )
         ]
