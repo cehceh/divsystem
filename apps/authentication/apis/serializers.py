@@ -1,7 +1,6 @@
-from xmlrpc.client import DateTime
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
-from rest_framework import serializers
+from rest_framework import exceptions, serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import LoginSerializer
 from datetime import datetime, date
@@ -9,6 +8,7 @@ from datetime import datetime, date
 from django.core.validators import RegexValidator
 
 from django.utils.timezone import utc
+from django.contrib.auth import authenticate
 
 from ..models import  CustomUser
 
@@ -133,7 +133,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         return user
 
 
-class CustomLOGINSERIALIZER(LoginSerializer):
+class CustomLoginSerializer(LoginSerializer):
     username = serializers.CharField(label='Phone Number',required=True)
     email = None
 
@@ -153,6 +153,9 @@ class CustomLOGINSERIALIZER(LoginSerializer):
             return None
 
 
+
+## For task(3) 
+
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -168,22 +171,68 @@ class CustomObtainSerializer(TokenObtainPairSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        
         self.fields["phone_number"] = serializers.CharField()
         self.fields["phone_number"].required = True
-        self.fields["access"] = serializers.CharField()
-        self.fields["access"].required = True
+        self.fields["access_token"] = serializers.CharField()
+        self.fields["access_token"].required = True
         self.fields["status"] = serializers.CharField()
         self.fields["status"].required = True
 
+    def get_tokens_for_user(user):
+        refresh = RefreshToken.for_user(user)
 
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
 
-        # Add custom claims
-        token['phone_number'] = user.phone_number
-        token['status'] = user.status
-        # ...
-        print('TOKEN: ', token, 'ACCESS: ', token['phone_number'])
-        return token
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        data['username'] = self.user.username
+        data['phone_number'] = self.user.phone_number
+        # data['status'] = self.user.status
+
+        authenticate_kwargs = {
+            # self.username_field: attrs[self.username_field],
+            "phone_number": attrs["phone_number"],
+            "password": attrs["password"],
+        }
+        try:
+            authenticate_kwargs["request"] = self.context["request"]
+        except KeyError:
+            pass
+
+        self.user = authenticate(**authenticate_kwargs)
+        # if self.user:
+        #     return data
+        # else:
+        #     raise exceptions.AuthenticationFailed(
+        #         self.error_messages["no_active_account"],
+        #         "Something Went Wrong ...",
+        #     )
+
+        return data
+
+    # @classmethod
+    # def get_token(cls, user):
+    #     token = super().get_token(user)
+
+    #     # Add custom claims
+    #     token['phone_number'] = user.phone_number
+    #     token['status'] = user.status
+    #     # ...
+    #     print('TOKEN: ', token, 'ACCESS: ', token['phone_number'])
+    #     return token
     
+
+
+## Another solution for task(3)
+
+class UserTokenSerializer(serializers.Serializer):
+    token = serializers.CharField(required=True)
+    phone_number = serializers.CharField(required=True)
+    status = serializers.CharField(required=True)
+
+

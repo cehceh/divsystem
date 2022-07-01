@@ -1,10 +1,20 @@
-from rest_framework import generics, status
+from rest_framework import serializers, status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+# from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.views import APIView
+
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenViewBase
 
 from dj_rest_auth.registration.views import RegisterView
 
 from dj_rest_auth.views import LoginView
+
+from django.contrib.auth import authenticate
+
+from .serializers import CustomObtainSerializer, UserTokenSerializer
+
+from apps.authentication.models import CustomUser
 
 
 class MyCustomLogin(LoginView):
@@ -42,11 +52,38 @@ class MyCustomRegister(RegisterView):
         return base_response
 
 
-from rest_framework_simplejwt.views import TokenViewBase
-from .serializers import CustomObtainSerializer 
-
+## for task(3)
 
 class TokenObtainPairView(TokenViewBase):
     serializer_class = CustomObtainSerializer
 
 
+
+class UserTokenApi(APIView):
+
+    def post(self, request):
+        serializer = UserTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data # Fetch the data form serializer
+
+        # user = authenticate(email=data['email'], password=data['password']) # check for email and password
+        user = CustomUser.objects.values('phone_number')
+        match = user.filter(id=request.user.id).exists()
+        if match:
+            obj = user.get(id=request.user.id)
+        else:
+            obj = [] 
+        
+        if obj == [] or obj['phone_number'] != data['phone_number']: # check for phone
+            raise serializers.ValidationError({'error':'Incorrect phone number'})
+
+        # Generate Token
+        refresh = RefreshToken.for_user(obj)
+
+        return Response(
+            {
+                'access': str(refresh.access_token),
+                'refresh': str(refresh)
+            },
+                status=status.HTTP_200_OK
+            )
