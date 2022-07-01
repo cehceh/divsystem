@@ -31,7 +31,7 @@
 
   - Books which I open and not finish them (Test Driven Development with python), (Designing Microservices with Django), (Designing Data Intensive Application) and (High Performance Django).
 
-  - Many tries to fix issues in task(3) and tests but till now I think task(3) is may be not bad or I understood your task wrong. Anyway, I did my best as possible as I can to solve the issue.  
+  - Many tries to fix issues in task(3) and tests but till now I think task(3) may be not bad or I understood your task wrong. Anyway, I did my best as possible as I can to solve the issue.  
 
   - Finally I'm trying to enhance my knowledge. So I'm learning (Data Structure and algorithms) and (Design Patterns in Python) But the learning process takes some times to absorb the scientific material. But I'm hungry to learn more. 
   
