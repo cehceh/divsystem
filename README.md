@@ -2,7 +2,7 @@
 
 # Note:
 
-*You will found two contributors, two emails are for me cehceh(amr.jobmail@gmail.com) with my private email and amrammer(amr.ali@tuftstudios.com) with tuft studios email*
+*You will find two contributors, two emails are for me cehceh(amr.jobmail@gmail.com) with my private email and amrammer(amr.ali@tuftstudios.com) with tuft studios email*
 *The reason for that because on my machine I ran (git config --global user.email) for this email(amr.ali@tuftstudios.com) and forgot to do the same action for the main one(amr.jobmail@gmail.com)*
 
 
