@@ -20,6 +20,8 @@
   *But there are some difficulties faced me when I began to achieve the third task and also with testing*
 
   *Testing is one of the most important topics in Django that I try to penetrate it by reading books like (Test Driven Development with python) and with some good tutorials, but till now I'm struggling with it. Really I'm trying to be good in it but till now it's annoying me.*
+  - Update for the testing issue, The problem was in ("avatar field") it's an image field so we must use 
+  - (Base64ImageField) as mentioned here (https://stackoverflow.com/questions/28036404/django-rest-framework-upload-image-the-submitted-data-was-not-a-file)  
 
   *Also API with DRF I'm struggling with it, In fact I read the(Django for APIs)book by William S. Vincent in 10 days,*
   *Really it gives me an outline about the APIs terminology, but it's far from real Django REST Framework.*
