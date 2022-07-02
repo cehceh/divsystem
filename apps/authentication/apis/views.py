@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenViewBase
+from rest_framework_simplejwt.views import TokenViewBase, TokenVerifyView
 
 from dj_rest_auth.registration.views import RegisterView
 
@@ -12,7 +12,7 @@ from dj_rest_auth.views import LoginView
 
 from django.contrib.auth import authenticate
 
-from .serializers import CustomObtainSerializer, UserTokenSerializer
+from .serializers import CustomObtainSerializer, UserTokenSerializer, TokenAPISerializer
 
 from apps.authentication.models import CustomUser
 
@@ -57,6 +57,11 @@ class MyCustomRegister(RegisterView):
 class TokenObtainPairView(TokenViewBase):
     serializer_class = CustomObtainSerializer
 
+class TokenAPIView(TokenVerifyView):
+    serializer_class = TokenAPISerializer
+
+
+
 
 
 class UserTokenApi(APIView):
@@ -87,3 +92,30 @@ class UserTokenApi(APIView):
             },
                 status=status.HTTP_200_OK
             )
+
+
+
+## Another solution for Task(3)
+# from rest_framework.authtoken.views import ObtainAuthToken
+# from rest_framework.authtoken.models import Token
+# from rest_framework.response import Response
+
+# class CustomAuthToken(ObtainAuthToken):
+#     serializers_class = UserTokenSerializer
+
+#     def post(self, request, *args, **kwargs):
+#         # serializer = self.serializer_class(
+#         #     data=request.data, context={'request': request})
+#         serializer = UserTokenSerializer(
+#             data=request.data)
+
+#         serializer.is_valid(raise_exception=True)
+#         # user = serializer.validated_data['phone_number']
+#         user = request.user.id
+#         token, created = Token.objects.get_or_create(user=user)
+#         return Response({
+#             'token': token.key,
+#             'user_id': user.pk,
+#             'phone_number': user.phone_number
+#         }, status=status.HTTP_200_OK)
+

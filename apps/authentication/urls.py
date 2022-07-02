@@ -10,6 +10,8 @@ from .apis.views import (
     MyCustomLogin,
     TokenObtainPairView,
     UserTokenApi,
+    # CustomAuthToken,
+    TokenAPIView,
 )
 
 
@@ -18,12 +20,15 @@ urlpatterns = [
 
     # path("user/", DetailUserView.as_view(), name="edit_user"),
     
+    # path("token/for/user/", CustomAuthToken.as_view(), name="edit_user"),
+    
     path('register/', MyCustomRegister.as_view(), name='custom_register'),
     path('login/', MyCustomLogin.as_view(), name='custom_login'),
     path('logout/', LogoutView.as_view()),
     
     path('token/obtain/', TokenObtainPairView.as_view(), name='token_obtain'),
-    path('user/token/', UserTokenApi.as_view(), name='user_token'),
+    path('user/token/', TokenAPIView.as_view(), name='user_token'),
+    # path('user/token/', UserTokenApi.as_view(), name='user_token'),
 
 ]
 
